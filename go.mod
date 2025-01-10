@@ -1,4 +1,4 @@
-module signalcodex
+module github.com/austinrgray/signalcodex
 
 go 1.22.2
 

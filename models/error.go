@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"signalcodex/messages"
+	"github.com/austinrgray/signalcodex/messages"
 
 	pb "google.golang.org/protobuf/proto"
 	timepb "google.golang.org/protobuf/types/known/timestamppb"
