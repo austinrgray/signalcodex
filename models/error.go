@@ -27,8 +27,8 @@ type Error struct {
 	Timestamp   time.Time
 }
 
-func NewError(code string, salience ErrorSalience, desc string) *Error {
-	return &Error{
+func NewError(code string, salience ErrorSalience, desc string) Error {
+	return Error{
 		Code:        code,
 		Salience:    salience,
 		Description: desc,
@@ -36,8 +36,8 @@ func NewError(code string, salience ErrorSalience, desc string) *Error {
 	}
 }
 
-func ErrorFromProto(msg *messages.Error) *Error {
-	return &Error{
+func FromProto(msg *messages.Error) Error {
+	return Error{
 		Code:        msg.Code,
 		Salience:    ErrorSalience(msg.Salience),
 		Description: msg.Description,

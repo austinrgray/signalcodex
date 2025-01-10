@@ -1,26 +1,55 @@
-syntax = "proto3"
+syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
 option go_package = "./messages";
 
+enum ManifestStatus {
+    MANIFEST_ASSIGNED = 0;
+    MANIFEST_PENDING_PICKUP = 1;
+    MANIFEST_IN_TRANSIT = 2;
+    MANIFEST_DELIVERED = 3;
+    MANIFEST_DAMAGED = 4;
+    MANIFEST_LOST = 5;
+    MANIFEST_CANCELLED = 6;
+    MANIFEST_RETURNING = 7;
+    MANIFEST_RETURNED = 8;
+    MANIFEST_ARCHIVED = 9;
+}
+
+enum ConsignmentStatus {
+    CONSIGN_ASSIGNED = 0;
+    CONSIGN_PENDING_PICKUP = 1;
+    CONSIGN_IN_TRANSIT = 2;
+    CONSIGN_DELIVERED = 3;
+    CONSIGN_DAMAGED = 4;
+    CONSIGN_LOST = 5;
+    CONSIGN_CANCELLED = 6;
+    CONSIGN_RETURNING = 7;
+    CONSIGN_RETURNED = 8;
+    CONSIGN_ARCHIVED = 9;
+}
+
 message Manifest {
     google.protobuf.Timestamp Timestamp = 1;
-    string Id = 2;
-    string Status = 3;
-    int32 SoulsOnboard = 4;
-    int32 Provisions = 5;
-    double VesselMass = 6;
-    repeated Consignment Consignments = 7; 
+    google.protobuf.Timestamp TimeAssigned = 2;
+    google.protobuf.Timestamp TimeCompleted = 3;
+    string Id = 4;
+    ManifestStatus Status = 5;
+    int32 SoulsOnboard = 6;
+    int32 Provisions = 7;
+    double VesselMass = 8;
+    repeated Consignment Consignments = 9;
 }
 
 message Consignment {
-    google.protobuf.Timestamp PickedUp = 1;
-    google.protobuf.Timestamp Delivered = 2;
+    google.protobuf.Timestamp TimeLoaded = 1;
+    google.protobuf.Timestamp TimeDelivered = 2;
     string Id = 3;
-    string PickupWaypointId = 4;
-    string DestinationWaypointId = 5;
-    repeated Items = 6;
+    ConsignmentStatus Status = 4;
+    string PickupId = 5;
+    string DestinationId = 6;
+    repeated Item Items = 7;
 }
 
 message Item {
