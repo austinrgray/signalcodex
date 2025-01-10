@@ -1,0 +1,86 @@
+syntax = "proto3"
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./messages";
+
+message HeartbeatMsg {
+    google.protobuf.Timestamp Timestamp = 1;
+    VesselInfo Info = 2;
+    Manifest Manifest = 3;
+    MissionInfo Mission = 4;
+    BridgeStatus Bridge = 5;
+    CommsStatus Comms = 6;
+    EnginesStatus Engines = 7;
+    HabitatStatus Habitat = 8;
+    NavStatus Nav = 9;
+    SensorsStatus Sensors = 10;
+}
+
+message VesselInfo {
+    string Id = 1;
+    string Name = 2;
+    string Version = 3;
+    string ModelId = 4;
+    string Class = 5
+}
+
+message BridgeStatus {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Mode = 2;
+    string Health Health = 3;
+    repeated ErrorMsg Errors = 5;
+}
+
+message CommsStatus {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Mode = 2;
+    string Health = 3;
+    repeated Connection Connections = 4; //Create
+    repeated ErrorMsg Errors = 5;
+}
+
+message EnginesStatus {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Mode = 2;
+    string Health = 3;
+    Vector AggregateThrustVector = 4;
+    repeated EngineStatus Engines = 5; 
+    repeated ErrorMsg Errors = 6;
+}
+
+message EngineStatus {
+    string Mode = 1;
+    string Health = 2;
+    Vector ThrustVector = 3;
+    repeated ErrorMsg Errors = 6;
+}
+
+message HabitatStatus {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Mode = 2;
+    string Health = 3;
+    repeated HabitatSensor = 4; //Create
+    repeated ErrorMsg Errors = 5;
+}
+
+message NavStatus {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Mode = 2;
+    string Health = 3;
+    Telemetry CurrentTelemetry = 4;
+    Directive CurrentDirective = 5; //Create
+    Directive NextDirective = 6; //Create
+    repeated ErrorMsg Errors = 7;
+}
+
+message SensorsStatus {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Mode = 2;
+    string Health = 3;
+    repeated ForeignObjects ForeignObjects = 4; //Create
+    repeated ErrorMsg Errors = 5;
+}
+
+
+

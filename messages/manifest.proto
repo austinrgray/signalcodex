@@ -1,0 +1,31 @@
+syntax = "proto3"
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./messages";
+
+message Manifest {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Id = 2;
+    string Status = 3;
+    int32 SoulsOnboard = 4;
+    int32 Provisions = 5;
+    double VesselMass = 6;
+    repeated Consignment Consignments = 7; 
+}
+
+message Consignment {
+    google.protobuf.Timestamp PickedUp = 1;
+    google.protobuf.Timestamp Delivered = 2;
+    string Id = 3;
+    string PickupWaypointId = 4;
+    string DestinationWaypointId = 5;
+    repeated Items = 6;
+}
+
+message Item {
+    string Description = 1;
+    int32 Quantity = 2;
+    double Amount = 3;
+    double Mass = 4;
+}

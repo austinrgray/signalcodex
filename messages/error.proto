@@ -1,0 +1,20 @@
+syntax = "proto3"
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./messages";
+
+enum ErrorSalience {
+    LOW_ERR_SALIENCE = 0;
+    MED_ERR_SALIENCE = 1;
+    HIGH_ERR_SALIENCE = 2;
+    CRITICAL_ERR_SALIENCE = 3;
+    FATAL_ERR_SALIENCE = 4;
+}
+
+message Error {
+    string Code = 1;
+    ErrorSalience Salience = 2;
+    string Description = 3;
+    google.protobuf.Timestamp Timestamp = 4;
+}

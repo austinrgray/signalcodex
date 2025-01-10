@@ -1,0 +1,17 @@
+syntax = "proto3"
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./messages";
+
+message MissionMsg {
+    google.protobuf.Timestamp Timestamp = 1;
+    string Id = 2;
+    string Status = 3;
+    google.protobuf.Timestamp AssignedDateTime = 4;
+    google.protobuf.Timestamp ScheduledStartDateTime = 5;
+    google.protobuf.Timestamp StartedDateTime = 6;
+    google.protobuf.Timestamp CompletedDateTime = 7;
+    repeated MissionNode MissionNodes = 9; //Create
+    repeated Error Errors = 10;
+}

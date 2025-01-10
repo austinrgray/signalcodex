@@ -1,0 +1,27 @@
+syntax = "proto3"
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./messages";
+
+
+
+message Telemetry {
+    
+}
+message Vector {
+    double XV
+    double YV
+    double ZV
+}
+
+message Coordinate {
+    double X
+    double Y
+    double Z
+}
+
+message Position {
+    Coordinate Coordinate = 1;
+    double Orientation = 2;
+}
