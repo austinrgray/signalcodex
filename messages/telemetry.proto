@@ -1,4 +1,4 @@
-syntax = "proto3"
+syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
@@ -7,8 +7,18 @@ option go_package = "./messages";
 
 
 message Telemetry {
+    Coordinate3D Coordinate = 1;
+    Attitude3D Attitude = 2;
+    Velocity3D Velocity = 3;
+    ThrustVector Thrust = 4;
+    Momentum3D LinearMomentum = 5;
+    AngularMomentum3D AngularMomentum = 6;
+    Forces
     
 }
+
+
+
 message Vector {
     double XV
     double YV

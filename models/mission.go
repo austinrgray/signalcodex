@@ -1,6 +1,8 @@
 package models
 
-import timepb "google.golang.org/protobuf/types/known/timestamppb"
+import (
+	"time"
+)
 
 type Mission struct {
 	Id                      string
@@ -9,11 +11,11 @@ type Mission struct {
 	Waypoint                []Waypoint
 	Directives              []Directive
 	Consignments            []Consignment
-	TimeAssigned            timepb.Timestamp
-	ScheduledStartTime      timepb.Timestamp
-	ActualStartTime         timepb.Timestamp
-	ScheduledCompletionTime timepb.Timestamp
-	ActualCompletionTime    timepb.Timestamp
+	TimeAssigned            time.Time
+	ScheduledStartTime      time.Time
+	ActualStartTime         time.Time
+	ScheduledCompletionTime time.Time
+	ActualCompletionTime    time.Time
 }
 
 type Directive struct {
@@ -23,18 +25,9 @@ type Directive struct {
 	Action          string
 	TargetTelemetry Telemetry
 	Waypoint        *Waypoint
-	NextDirective   *Directive
 }
 
 type Waypoint struct {
-	Id                string
-	Name              string
-	Type              string
-	Coordinate        Coordinate3D
-	Attitude          Attitude3D
-	Velocity          Velocity3D
-	OrbitalParameters OrbitalParameters
-	Forces            []GravitationalBody
-	ArrivalWindow     timepb.Timestamp
-	DepartureWindow   timepb.Timestamp
+	ArrivalWindow   time.Time
+	DepartureWindow time.Time
 }

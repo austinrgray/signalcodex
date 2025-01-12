@@ -43,8 +43,8 @@ const (
 type Manifest struct {
 	Id            string
 	Status        ManifestStatus
-	SoulsOnboard  uint8
-	Provisions    int8
+	SoulsOnboard  uint32
+	Provisions    int32
 	VesselMass    float64
 	Consignments  []Consignment
 	TimeAssigned  time.Time
@@ -63,12 +63,12 @@ type Consignment struct {
 
 type Item struct {
 	Description string
-	Quantity    uint8
+	Quantity    uint32
 	Amount      float64
 	Mass        float64
 }
 
-func NewManifest(id string, status ManifestStatus, souls uint8, provisions int8, mass float64, tAssigned time.Time) Manifest {
+func NewManifest(id string, status ManifestStatus, souls uint32, provisions int32, mass float64, tAssigned time.Time) Manifest {
 	return Manifest{
 		Id:           id,
 		Status:       status,
@@ -89,7 +89,7 @@ func NewConsignment(id string, status ConsignmentStatus, pickupId string, destin
 	}
 }
 
-func NewItem(description string, quantity uint8, amount float64, mass float64) Item {
+func NewItem(description string, quantity uint32, amount float64, mass float64) Item {
 	return Item{
 		Description: description,
 		Quantity:    quantity,
@@ -169,13 +169,20 @@ func ManifestFromProto(msg *messages.Manifest) Manifest {
 		consignments[i] = ConsignmentFromProto(c)
 	}
 
+	var souls uint32
+	if msg.SoulsOnboard > 0 {
+		souls = uint32(msg.SoulsOnboard)
+	} else {
+		souls = 0
+	}
+
 	return Manifest{
 		TimeAssigned:  msg.TimeAssigned.AsTime(),
 		TimeCompleted: msg.TimeCompleted.AsTime(),
 		Id:            msg.Id,
 		Status:        ManifestStatus(msg.Status),
-		SoulsOnboard:  uint8(msg.SoulsOnboard),
-		Provisions:    int8(msg.Provisions),
+		SoulsOnboard:  souls,
+		Provisions:    msg.Provisions,
 		VesselMass:    msg.VesselMass,
 		Consignments:  consignments,
 	}
@@ -199,9 +206,16 @@ func ConsignmentFromProto(msg *messages.Consignment) Consignment {
 }
 
 func ItemFromProto(i *messages.Item) Item {
+	var qty uint32
+	if i.Quantity > 0 {
+		qty = uint32(i.Quantity)
+	} else {
+		qty = 0
+	}
+
 	return Item{
 		Description: i.Description,
-		Quantity:    uint8(i.Quantity),
+		Quantity:    qty,
 		Amount:      i.Amount,
 		Mass:        i.Mass,
 	}

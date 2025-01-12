@@ -52,12 +52,12 @@ type Connection struct {
 type Engines struct {
 	Mode            string
 	Health          string
-	AggThrustVector ThrustVector
-	Engines         []*Engine
+	AggregateThrust ThrustVector
+	Thrusters       []*Thruster
 	Errors          []Error
 }
 
-type Engine struct {
+type Thruster struct {
 	Mode         string
 	Health       string
 	ThrustVector ThrustVector
@@ -88,13 +88,6 @@ type Nav struct {
 type RemoteSensors struct {
 	Mode     string
 	Health   string
-	Readings []ForeignObject
+	Readings []CelestialBody
 	Errors   []Error
-}
-
-type ForeignObject struct {
-	Coordinate Coordinate3D
-	Attitude   Attitude3D
-	Velocity   Velocity3D
-	Body       GravitationalBody
 }
