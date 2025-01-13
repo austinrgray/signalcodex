@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/austinrgray/signalcodex/messages"
+	"go.uber.org/zap"
 
 	pb "google.golang.org/protobuf/proto"
 	timepb "google.golang.org/protobuf/types/known/timestamppb"
@@ -36,12 +37,21 @@ func NewError(code string, salience ErrorSalience, desc string) Error {
 	}
 }
 
-func FromProto(msg *messages.Error) Error {
+func ErrorFromProto(msg *messages.Error) Error {
 	return Error{
 		Code:        msg.Code,
 		Salience:    ErrorSalience(msg.Salience),
 		Description: msg.Description,
 		Timestamp:   msg.Timestamp.AsTime(),
+	}
+}
+
+func ZapFromProto(msg *messages.Error) []zap.Field {
+	err := fmt.Errorf("%s: %s", msg.Code, msg.Description)
+	return []zap.Field{
+		zap.Error(err),
+		zap.Int("salience", int(msg.Salience)),
+		zap.Time("timestamp", msg.Timestamp.AsTime()),
 	}
 }
 
