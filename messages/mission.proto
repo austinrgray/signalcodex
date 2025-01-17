@@ -1,4 +1,4 @@
-syntax = "proto3"
+syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
@@ -13,5 +13,5 @@ message MissionMsg {
     google.protobuf.Timestamp StartedDateTime = 6;
     google.protobuf.Timestamp CompletedDateTime = 7;
     repeated MissionNode MissionNodes = 9; //Create
-    repeated Error Errors = 10;
+    repeated SystemAlert SystemAlerts = 10;
 }

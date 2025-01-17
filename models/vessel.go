@@ -26,27 +26,27 @@ type VesselInfo struct {
 }
 
 type Bridge struct {
-	Mode   string
-	Health string
-	Errors []Error
+	Mode         string
+	Health       string
+	SystemAlerts []SystemAlert
 }
 
 type Comms struct {
-	LocalAddr string
-	Mode      string
-	Health    string
-	Conns     map[string]*Connection
-	Errors    []Error
+	LocalAddr    string
+	Mode         string
+	Health       string
+	Conns        map[string]*Connection
+	SystemAlerts []SystemAlert
 }
 
 type Connection struct {
-	RemoteAddr string
-	Mode       string
-	Health     string
-	Conn       *nats.Conn
-	In         chan nats.Msg
-	Out        chan proto.Message
-	Errors     []Error
+	RemoteAddr   string
+	Mode         string
+	Health       string
+	Conn         *nats.Conn
+	In           chan nats.Msg
+	Out          chan proto.Message
+	SystemAlerts []SystemAlert
 }
 
 type Engines struct {
@@ -54,26 +54,26 @@ type Engines struct {
 	Health          string
 	AggregateThrust ThrustVector
 	Thrusters       []*Thruster
-	Errors          []Error
+	SystemAlerts    []SystemAlert
 }
 
 type Thruster struct {
 	Mode         string
 	Health       string
 	ThrustVector ThrustVector
-	Errors       []Error
+	SystemAlerts []SystemAlert
 }
 
 type Habitat struct {
-	Mode     string
-	Health   string
-	O2       float32
-	CO2      float32
-	KPA      float32
-	Temp     float32
-	Humidity float32
-	AQI      float32
-	Errors   []Error
+	Mode         string
+	Health       string
+	O2           float32
+	CO2          float32
+	KPA          float32
+	Temp         float32
+	Humidity     float32
+	AQI          float32
+	SystemAlerts []SystemAlert
 }
 
 type Nav struct {
@@ -82,12 +82,12 @@ type Nav struct {
 	CurrentTelemetry Telemetry
 	CurrentDirective Directive
 	NextDirective    Directive
-	Errors           []Error
+	SystemAlerts     []SystemAlert
 }
 
 type RemoteSensors struct {
-	Mode     string
-	Health   string
-	Readings []CelestialBody
-	Errors   []Error
+	Mode         string
+	Health       string
+	Readings     []CelestialBody
+	SystemAlerts []SystemAlert
 }

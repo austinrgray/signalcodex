@@ -29,7 +29,7 @@ message BridgeStatus {
     google.protobuf.Timestamp Timestamp = 1;
     string Mode = 2;
     string Health Health = 3;
-    repeated ErrorMsg Errors = 5;
+    repeated SystemAlert SystemAlerts = 5;
 }
 
 message CommsStatus {
@@ -37,7 +37,7 @@ message CommsStatus {
     string Mode = 2;
     string Health = 3;
     repeated Connection Connections = 4; //Create
-    repeated ErrorMsg Errors = 5;
+    repeated SystemAlert SystemAlerts = 5;
 }
 
 message EnginesStatus {
@@ -46,14 +46,14 @@ message EnginesStatus {
     string Health = 3;
     Vector AggregateThrustVector = 4;
     repeated EngineStatus Engines = 5; 
-    repeated ErrorMsg Errors = 6;
+    repeated SystemAlert SystemAlerts = 6;
 }
 
 message EngineStatus {
     string Mode = 1;
     string Health = 2;
     Vector ThrustVector = 3;
-    repeated ErrorMsg Errors = 6;
+    repeated SystemAlert SystemAlerts = 6;
 }
 
 message HabitatStatus {
@@ -61,7 +61,7 @@ message HabitatStatus {
     string Mode = 2;
     string Health = 3;
     repeated HabitatSensor = 4; //Create
-    repeated ErrorMsg Errors = 5;
+    repeated SystemAlert SystemAlerts = 5;
 }
 
 message NavStatus {
@@ -71,7 +71,7 @@ message NavStatus {
     Telemetry CurrentTelemetry = 4;
     Directive CurrentDirective = 5; //Create
     Directive NextDirective = 6; //Create
-    repeated ErrorMsg Errors = 7;
+    repeated SystemAlert SystemAlerts = 7;
 }
 
 message SensorsStatus {
@@ -79,7 +79,7 @@ message SensorsStatus {
     string Mode = 2;
     string Health = 3;
     repeated ForeignObjects ForeignObjects = 4; //Create
-    repeated ErrorMsg Errors = 5;
+    repeated SystemAlert SystemAlerts = 5;
 }
 
 

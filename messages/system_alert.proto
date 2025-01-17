@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./messages";
+
+enum SystemAlertSalience {
+    LOW_ALERT_SALIENCE = 0;
+    MED_ALERT_SALIENCE = 1;
+    HIGH_ALERT_SALIENCE = 2;
+    CRITICAL_ALERT_SALIENCE = 3;
+    FATAL_ALERT_SALIENCE = 4;
+}
+
+message SystemAlert {
+    string Code = 1;
+    SystemAlertSalience Salience = 2;
+    string Description = 3;
+    google.protobuf.Timestamp Timestamp = 4;
+}
