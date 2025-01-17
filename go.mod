@@ -17,3 +17,9 @@ require (
 	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 )
+
+retract (
+	v0.1.0
+	v0.1.1
+	v0.0.1
+)
