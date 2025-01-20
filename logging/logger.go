@@ -1,27 +1,29 @@
 package logging
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"time"
 
+	"github.com/austinrgray/signalcodex/utils"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-func InitLogger(appName string) (*zap.Logger, error) {
+func InitLogger(svcName string) (*zap.Logger, error) {
 	currentDate := time.Now().UTC().Format("2006-01-02")
-	debugURL := fmt.Sprintf("logs/%s_debug_%s.log", currentDate, appName)
-	errorURL := fmt.Sprintf("logs/%s_error_%s.log", currentDate, appName)
+	debugURL := fmt.Sprintf("logs/%s/%s_debug.log", svcName, currentDate)
+	errorURL := fmt.Sprintf("logs/%s/%s_error.log", svcName, currentDate)
 
 	debugFile, err := os.OpenFile(debugURL, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return DefaultLogger(appName), fmt.Errorf("initLogger: error opening debug log file")
+		return DefaultLogger(svcName), fmt.Errorf(string(LogErrFmtDebugLoggerInit), err)
 	}
 
 	errorFile, err := os.OpenFile(errorURL, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return DefaultLogger(appName), fmt.Errorf("initLogger: error opening error log file")
+		return DefaultLogger(svcName), fmt.Errorf(string(LogErrFmtErrorLoggerInit), err)
 	}
 
 	localErrorsFile := zapcore.Lock(errorFile)
@@ -42,11 +44,11 @@ func InitLogger(appName string) (*zap.Logger, error) {
 	)
 
 	return zap.New(core).With(
-		zap.String("app", appName),
+		zap.String(string(LogKeySvcName), svcName),
 	), nil
 }
 
-func DefaultLogger(appName string) *zap.Logger {
+func DefaultLogger(svcName string) *zap.Logger {
 	config := zap.NewDevelopmentConfig()
 	consoleEncoder := zapcore.NewConsoleEncoder(config.EncoderConfig)
 
@@ -60,7 +62,7 @@ func DefaultLogger(appName string) *zap.Logger {
 		zapcore.NewCore(consoleEncoder, stdError, lowPriority),
 	)
 	return zap.New(core).With(
-		zap.String("app", appName),
+		zap.String(string(LogKeySvcName), svcName),
 	)
 }
 
@@ -72,4 +74,10 @@ func priorityLevels() (zapcore.LevelEnabler, zapcore.LevelEnabler) {
 		return lvl < zapcore.ErrorLevel
 	})
 	return highPriority, lowPriority
+}
+
+func NewLoggerContext(parent context.Context, fields ...zap.Field) context.Context {
+	parentLogger := parent.Value(utils.ContextLoggerKey).(*zap.Logger)
+	logger := parentLogger.With(fields...)
+	return context.WithValue(parent, utils.ContextLoggerKey, logger)
 }

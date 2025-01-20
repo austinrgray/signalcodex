@@ -1,6 +1,6 @@
 module github.com/austinrgray/signalcodex
 
-go 1.22.2
+go 1.23.3
 
 require (
 	github.com/nats-io/nats.go v1.38.0
@@ -19,7 +19,7 @@ require (
 )
 
 retract (
-	v0.1.0
 	v0.1.1
+	v0.1.0
 	v0.0.1
 )

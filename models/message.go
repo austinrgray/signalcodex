@@ -1,17 +1,39 @@
 package models
 
-const (
-	EventTimeStampHeaderField = "event_timestamp"
-	RetryCountHeaderField     = "retry_count"
-	MessageVersionHeaderField = "msg_version"
-	MessageFormatHeaderField  = "msg_format"
-	MessageTypeHeaderField    = "msg_type"
-	TraceIdHeaderField        = "trace-id"
-	SpanIdHeaderField         = "span-id"
-	RequestIdHeaderField      = "request-id"
-	VesselIdHeaderField       = "vessel-id"
-)
+import "github.com/nats-io/nats.go"
+
+type HeaderField string
 
 const (
-	CommandMsgType = "command"
+	TimeStampHeaderField  HeaderField = "timestamp"
+	RetryCountHeaderField HeaderField = "retry-count"
+	MsgVersionHeaderField HeaderField = "msg-version"
+	MsgFormatHeaderField  HeaderField = "msg-format"
+	MsgTypeHeaderField    HeaderField = "msg-type"
+	MsgSubtypeHeaderField HeaderField = "msg-subtype"
+	TraceIdHeaderField    HeaderField = "trace-id"
+	SpanIdHeaderField     HeaderField = "span-id"
+	RequestIdHeaderField  HeaderField = "request-id"
+	VesselIdHeaderField   HeaderField = "vessel-id"
 )
+
+type MsgType string
+
+const (
+	CommandMsgType MsgType = "command"
+)
+
+type MsgSubType string
+
+const (
+	StatusReqCmd MsgSubType = "status-req"
+)
+
+func NewNatsMessage(subject string, reply string, header nats.Header, data []byte) *nats.Msg {
+	return &nats.Msg{
+		Subject: subject,
+		Reply:   reply,
+		Header:  header,
+		Data:    data,
+	}
+}
