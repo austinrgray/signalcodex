@@ -1,8 +1,9 @@
-module github.com/austinrgray/signalcodex
+module signalcodex
 
 go 1.23.3
 
 require (
+	github.com/austinrgray/signalcodex v0.0.0-20250120225733-094f374a39e0
 	github.com/nats-io/nats.go v1.38.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/protobuf v1.36.2
