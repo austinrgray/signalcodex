@@ -81,3 +81,11 @@ func NewLoggerContext(parent context.Context, fields ...zap.Field) context.Conte
 	logger := parentLogger.With(fields...)
 	return context.WithValue(parent, utils.ContextLoggerKey, logger)
 }
+
+func LoggerFromContext(ctx context.Context) *zap.Logger {
+	logger, ok := ctx.Value(utils.ContextLoggerKey).(*zap.Logger)
+	if !ok {
+		return zap.NewNop()
+	}
+	return logger
+}
